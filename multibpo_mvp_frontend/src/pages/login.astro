@@ -1,0 +1,498 @@
+---
+// ==========================================================================
+// MultiBPO MVP Frontend - Página de Login
+// Mini-Fase MVP 2 - Frontend básico
+// 
+// Formulário de autenticação integrado com backend MVP
+// Login via email + senha com JWT tokens
+// ==========================================================================
+
+import Layout from '../layouts/layout_principal.astro';
+
+// Meta dados da página
+const pageTitle = "Login";
+const pageDescription = "Faça login no MultiBPO MVP - Acesse sua conta contábil";
+---
+
+<Layout 
+  title={pageTitle}
+  description={pageDescription}
+  showHeader={true}
+  showFooter={true}
+  requireAuth={false}
+>
+  <!-- =================================================================== -->
+  <!-- CONTAINER PRINCIPAL -->
+  <!-- =================================================================== -->
+  <div class="min-h-screen bg-gradient-multibpo flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    
+    <!-- ================================================================= -->
+    <!-- CARD DE LOGIN -->
+    <!-- ================================================================= -->
+    <div class="max-w-form w-full bg-white rounded-multibpo shadow-multibpo p-8 animate-fade-in">
+      
+      <!-- Header do Card -->
+      <div class="text-center mb-8">
+        <div class="mx-auto w-16 h-16 bg-gradient-multibpo rounded-multibpo flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h1 class="text-header-lg font-bold text-contabil-azul mb-2">
+          Login MVP
+        </h1>
+        <p class="text-contabil-texto">
+          Entre na sua conta MultiBPO MVP
+        </p>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- FORMULÁRIO DE LOGIN -->
+      <!-- ================================================================= -->
+      <form id="form-login" class="space-y-6">
+        
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-contabil-azul mb-2">
+            Email *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+            class="form-input w-full px-4 py-3 border border-gray-300 rounded-input focus:ring-2 focus:ring-azul-secundario focus:border-transparent transition-all duration-200"
+            placeholder="seu@email.com"
+          />
+          <div class="error-message hidden text-contabil-erro text-sm mt-1"></div>
+        </div>
+
+        <!-- Senha -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-contabil-azul mb-2">
+            Senha *
+          </label>
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              class="form-input w-full px-4 py-3 pr-12 border border-gray-300 rounded-input focus:ring-2 focus:ring-azul-secundario focus:border-transparent transition-all duration-200"
+              placeholder="Sua senha"
+            />
+            <button
+              type="button"
+              id="toggle-password"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-contabil-azul transition-colors duration-200"
+              tabindex="-1"
+            >
+              <svg id="eye-closed" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+              </svg>
+              <svg id="eye-open" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </button>
+          </div>
+          <div class="error-message hidden text-contabil-erro text-sm mt-1"></div>
+        </div>
+
+        <!-- Lembrar-me e Esqueci a senha -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input
+              id="remember-me"
+              name="remember-me"
+              type="checkbox"
+              class="h-4 w-4 text-azul-secundario focus:ring-azul-secundario border-gray-300 rounded"
+            />
+            <label for="remember-me" class="ml-2 block text-sm text-contabil-texto">
+              Lembrar-me
+            </label>
+          </div>
+
+          <div class="text-sm">
+            <a 
+              href="#" 
+              class="text-contabil-azul hover:text-azul-secundario font-medium transition-colors duration-200"
+              onclick="alert('Funcionalidade em desenvolvimento')"
+            >
+              Esqueceu a senha?
+            </a>
+          </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- ALERTAS E MENSAGENS -->
+        <!-- =============================================================== -->
+        <div id="alert-container" class="hidden">
+          <div id="alert-success" class="hidden bg-gradient-success border border-contabil-sucesso text-contabil-sucesso px-4 py-3 rounded-input">
+            <div class="flex">
+              <svg class="w-5 h-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span id="alert-success-message"></span>
+            </div>
+          </div>
+
+          <div id="alert-error" class="hidden bg-red-50 border border-contabil-erro text-contabil-erro px-4 py-3 rounded-input">
+            <div class="flex">
+              <svg class="w-5 h-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+              </svg>
+              <span id="alert-error-message"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- BOTÃO DE LOGIN -->
+        <!-- =============================================================== -->
+        <div>
+          <button
+            type="submit"
+            id="btn-login"
+            class="w-full bg-gradient-multibpo text-white font-semibold py-3 px-4 rounded-button hover:shadow-button focus:outline-none focus:ring-2 focus:ring-azul-secundario focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span id="btn-text">Entrar no MVP</span>
+            <span id="btn-loading" class="hidden">
+              <svg class="animate-spin h-5 w-5 inline mr-2" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                <path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+              </svg>
+              Entrando...
+            </span>
+          </button>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- LINK PARA CADASTRO -->
+        <!-- =============================================================== -->
+        <div class="text-center">
+          <p class="text-contabil-texto">
+            Não tem uma conta? 
+            <a 
+              href="/cadastro" 
+              class="text-contabil-azul hover:text-azul-secundario font-medium transition-colors duration-200"
+            >
+              Criar conta grátis
+            </a>
+          </p>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- INFORMAÇÕES DO SISTEMA -->
+        <!-- =============================================================== -->
+        <div class="mt-8 pt-6 border-t border-gray-200">
+          <div class="text-center">
+            <p class="text-xs text-gray-500 mb-2">MultiBPO MVP - Sistema Contábil</p>
+            <div class="flex justify-center space-x-4 text-xs text-gray-400">
+              <span>🔒 Seguro</span>
+              <span>📱 Responsivo</span>
+              <span>⚡ Rápido</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- CARD DE DEMO (lado direito em telas grandes) -->
+    <!-- ================================================================= -->
+    <div class="hidden xl:block xl:ml-12 max-w-md">
+      <div class="bg-white/10 backdrop-blur-sm rounded-multibpo p-6 text-white">
+        <h3 class="text-lg font-semibold mb-4">💡 Demo MVP</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+            <span>Sistema funcionando</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
+            <span>Backend MVP ativo</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+            <span>Frontend responsivo</span>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-white/10 rounded-lg">
+          <p class="text-xs opacity-90">
+            <strong>Teste com:</strong><br>
+            Email: maria@teste.com<br>
+            (se já cadastrou via cURL)
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<!-- ===================================================================== -->
+<!-- SCRIPTS DA PÁGINA -->
+<!-- ===================================================================== -->
+<script>
+  // Importar utilitários (serão criados depois)
+  import { apiClient } from '../utils/api_client.js';
+
+  // =====================================================================
+  // INICIALIZAÇÃO
+  // =====================================================================
+  document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se já está logado
+    const token = localStorage.getItem('multibpo_access_token');
+    if (token) {
+      // Já logado, redirecionar para dashboard
+      window.location.href = '/dashboard';
+      return;
+    }
+
+    // Configurar toggle de senha
+    setupPasswordToggle();
+
+    // Verificar se há mensagem de sucesso (vindo de cadastro)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('registered') === 'true') {
+      showAlert('success', 'Conta criada com sucesso! Faça login para continuar.');
+    }
+  });
+
+  // =====================================================================
+  // TOGGLE PASSWORD VISIBILITY
+  // =====================================================================
+  function setupPasswordToggle() {
+    const toggleBtn = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    const eyeClosed = document.getElementById('eye-closed');
+    const eyeOpen = document.getElementById('eye-open');
+
+    toggleBtn?.addEventListener('click', function() {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeClosed.classList.add('hidden');
+        eyeOpen.classList.remove('hidden');
+      } else {
+        passwordInput.type = 'password';
+        eyeClosed.classList.remove('hidden');
+        eyeOpen.classList.add('hidden');
+      }
+    });
+  }
+
+  // =====================================================================
+  // SUBMISSÃO DO FORMULÁRIO
+  // =====================================================================
+  document.getElementById('form-login')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    
+    // Limpar erros anteriores
+    clearAllErrors();
+    
+    // Validações frontend básicas
+    if (!validateForm(data)) {
+      return;
+    }
+    
+    // Mostrar loading
+    setLoading(true);
+    
+    try {
+      // Chamada para API de login
+      const response = await apiClient.post('/login/', {
+        email: data.email,
+        password: data.password
+      });
+      
+      if (response.success) {
+        // Salvar tokens e dados do usuário
+        localStorage.setItem('multibpo_access_token', response.tokens.access);
+        localStorage.setItem('multibpo_refresh_token', response.tokens.refresh);
+        localStorage.setItem('multibpo_user', JSON.stringify(response.user));
+        
+        // Verificar "lembrar-me"
+        if (data['remember-me']) {
+          localStorage.setItem('multibpo_remember', 'true');
+        }
+        
+        // Mostrar sucesso
+        showAlert('success', `Bem-vindo de volta, ${response.user.nome_completo}!`);
+        
+        // Redirecionar para dashboard após 1.5 segundos
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1500);
+        
+      } else {
+        showAlert('error', response.message || 'Erro ao fazer login. Verifique suas credenciais.');
+      }
+      
+    } catch (error) {
+      console.error('Erro no login:', error);
+      
+      if (error.response?.data?.errors) {
+        // Mostrar erros específicos do backend
+        Object.entries(error.response.data.errors).forEach(([field, messages]) => {
+          showFieldError(field, Array.isArray(messages) ? messages[0] : messages);
+        });
+      } else if (error.response?.status === 400) {
+        showAlert('error', 'Email ou senha incorretos. Verifique seus dados.');
+      } else if (error.response?.status >= 500) {
+        showAlert('error', 'Erro no servidor. Tente novamente em alguns instantes.');
+      } else {
+        showAlert('error', 'Erro de conexão. Verifique sua internet e tente novamente.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  // =====================================================================
+  // FUNÇÕES UTILITÁRIAS
+  // =====================================================================
+  function validateForm(data) {
+    let isValid = true;
+    
+    // Validar email
+    if (!data.email?.trim()) {
+      showFieldError('email', 'Email é obrigatório');
+      isValid = false;
+    } else if (!isValidEmail(data.email)) {
+      showFieldError('email', 'Email inválido');
+      isValid = false;
+    }
+    
+    // Validar senha
+    if (!data.password?.trim()) {
+      showFieldError('password', 'Senha é obrigatória');
+      isValid = false;
+    }
+    
+    return isValid;
+  }
+
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  function showFieldError(fieldName, message) {
+    const field = document.getElementById(fieldName);
+    const errorDiv = field?.parentElement.querySelector('.error-message');
+    
+    if (field && errorDiv) {
+      field.classList.add('border-contabil-erro', 'focus:ring-red-500');
+      field.classList.remove('border-gray-300');
+      errorDiv.textContent = message;
+      errorDiv.classList.remove('hidden');
+    }
+  }
+
+  function hideFieldError(fieldName) {
+    const field = document.getElementById(fieldName);
+    const errorDiv = field?.parentElement.querySelector('.error-message');
+    
+    if (field && errorDiv) {
+      field.classList.remove('border-contabil-erro', 'focus:ring-red-500');
+      field.classList.add('border-gray-300');
+      errorDiv.classList.add('hidden');
+    }
+  }
+
+  function clearAllErrors() {
+    document.querySelectorAll('.error-message').forEach(el => {
+      el.classList.add('hidden');
+    });
+    
+    document.querySelectorAll('input').forEach(input => {
+      input.classList.remove('border-contabil-erro', 'focus:ring-red-500');
+      input.classList.add('border-gray-300');
+    });
+  }
+
+  function showAlert(type, message) {
+    const container = document.getElementById('alert-container');
+    const successAlert = document.getElementById('alert-success');
+    const errorAlert = document.getElementById('alert-error');
+    
+    // Esconder todos os alertas
+    successAlert.classList.add('hidden');
+    errorAlert.classList.add('hidden');
+    
+    // Mostrar alerta correto
+    if (type === 'success') {
+      document.getElementById('alert-success-message').textContent = message;
+      successAlert.classList.remove('hidden');
+    } else {
+      document.getElementById('alert-error-message').textContent = message;
+      errorAlert.classList.remove('hidden');
+    }
+    
+    container.classList.remove('hidden');
+    
+    // Auto-esconder após 5 segundos (exceto sucesso que redireciona)
+    if (type !== 'success') {
+      setTimeout(() => {
+        container.classList.add('hidden');
+      }, 5000);
+    }
+  }
+
+  function setLoading(loading) {
+    const btn = document.getElementById('btn-login');
+    const btnText = document.getElementById('btn-text');
+    const btnLoading = document.getElementById('btn-loading');
+    
+    if (loading) {
+      btn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+    } else {
+      btn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+    }
+  }
+</script>
+
+<!-- ===================================================================== -->
+<!-- FUNCIONALIDADES DA PÁGINA:
+
+1. FORMULÁRIO SIMPLIFICADO:
+   - Email + senha (MVP essencial)
+   - Toggle visibilidade senha
+   - Lembrar-me funcional
+
+2. VALIDAÇÕES:
+   - Frontend: email format + campos obrigatórios
+   - Backend: credenciais + erros específicos
+   - UX: campos destacados em erro
+
+3. AUTENTICAÇÃO:
+   - POST /api/v1/mvp/login/
+   - JWT tokens storage
+   - Redirecionamento automático
+
+4. UX OTIMIZADA:
+   - Verificação de login existente
+   - Loading states animados
+   - Mensagens de feedback
+   - Card demo para grandes telas
+
+5. RESPONSIVO:
+   - Layout adaptável
+   - Card demo apenas em XL
+   - Mobile-first approach
+
+6. INTEGRAÇÃO:
+   - Suporte a cadastro → login flow
+   - Remember me functionality
+   - Dashboard redirection
+===================================================================== -->

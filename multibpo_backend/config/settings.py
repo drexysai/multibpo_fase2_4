@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',  # ← NOVO: JWT tokens
     'django_extensions',         # ← NOVO: Ferramentas dev
     'phonenumber_field',         # ← NOVO: Validação telefones
+    'rest_framework_simplejwt.token_blacklist',
 
      # Sub-Fase 2.2.1 - Documentação e Testes
     'drf_yasg',                 # ← NOVO: Swagger/OpenAPI
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'apps.authentication',       # ← NOVO: App autenticação
     'apps.contadores',          # ← NOVO: App contadores
     'apps.receita',
+    'apps.mvp',
+    
 ]
 
 MIDDLEWARE = [

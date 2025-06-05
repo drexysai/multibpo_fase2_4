@@ -1,0 +1,530 @@
+---
+// ==========================================================================
+// MultiBPO MVP Frontend - Dashboard
+// Mini-Fase MVP 2 - Frontend básico
+// 
+// Área protegida com dados do usuário e funcionalidades MVP
+// Integração com backend para perfil e logout
+// ==========================================================================
+
+import Layout from '../layouts/layout_principal.astro';
+
+// Meta dados da página
+const pageTitle = "Dashboard";
+const pageDescription = "Dashboard MultiBPO MVP - Área do usuário";
+---
+
+<Layout 
+  title={pageTitle}
+  description={pageDescription}
+  showHeader={false}
+  showFooter={false}
+  requireAuth={true}
+>
+  <!-- =================================================================== -->
+  <!-- HEADER DASHBOARD CUSTOMIZADO -->
+  <!-- =================================================================== -->
+  <header class="bg-white shadow-card border-b border-gray-200">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        
+        <!-- Logo e Título -->
+        <div class="flex items-center space-x-4">
+          <div class="w-8 h-8 bg-gradient-multibpo rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">M</span>
+          </div>
+          <div>
+            <h1 class="text-lg font-semibold text-contabil-azul">MultiBPO MVP</h1>
+            <p class="text-xs text-gray-500">Dashboard</p>
+          </div>
+        </div>
+
+        <!-- Informações do Usuário e Logout -->
+        <div class="flex items-center space-x-4">
+          <!-- Nome do Usuário -->
+          <div class="hidden sm:block text-right">
+            <p id="user-name" class="text-sm font-medium text-contabil-azul">
+              Carregando...
+            </p>
+            <p id="user-email" class="text-xs text-gray-500">
+              -
+            </p>
+          </div>
+
+          <!-- Avatar -->
+          <div class="w-10 h-10 bg-gradient-multibpo rounded-full flex items-center justify-center">
+            <span id="user-avatar" class="text-white font-semibold text-sm">
+              ?
+            </span>
+          </div>
+
+          <!-- Botão Logout -->
+          <button
+            id="btn-logout"
+            type="button"
+            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-button font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+          >
+            <span id="logout-text">Sair</span>
+            <span id="logout-loading" class="hidden">
+              <svg class="animate-spin h-4 w-4 inline" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                <path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =================================================================== -->
+  <!-- CONTEÚDO PRINCIPAL DO DASHBOARD -->
+  <!-- =================================================================== -->
+  <main class="bg-gradient-multibpo min-h-screen">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      
+      <!-- ================================================================= -->
+      <!-- MENSAGEM DE BOAS-VINDAS -->
+      <!-- ================================================================= -->
+      <div class="bg-white rounded-multibpo shadow-card p-6 mb-8 animate-fade-in">
+        <div class="flex items-center space-x-4">
+          <div class="w-16 h-16 bg-gradient-multibpo rounded-multibpo flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m9-9H3" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h2 class="text-header-lg font-bold text-contabil-azul mb-2">
+              Bem-vindo ao MultiBPO MVP! 🎉
+            </h2>
+            <p id="welcome-message" class="text-contabil-texto">
+              Carregando informações da sua conta...
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- GRID DE CARDS INFORMATIVOS -->
+      <!-- ================================================================= -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        
+        <!-- Card Perfil -->
+        <div class="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 p-6">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-azul-secundario" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <h3 class="text-header-md font-semibold text-contabil-azul">Meu Perfil</h3>
+          </div>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-500">Nome:</span>
+              <span id="profile-name" class="font-medium text-contabil-texto">-</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Email:</span>
+              <span id="profile-email" class="font-medium text-contabil-texto">-</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">CPF:</span>
+              <span id="profile-cpf" class="font-medium text-contabil-texto">-</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Telefone:</span>
+              <span id="profile-telefone" class="font-medium text-contabil-texto">-</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Status:</span>
+              <span id="profile-status" class="font-medium text-contabil-sucesso">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Sistema -->
+        <div class="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 p-6">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-contabil-sucesso" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-header-md font-semibold text-contabil-azul">Sistema MVP</h3>
+          </div>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-500">Versão:</span>
+              <span class="font-medium text-contabil-texto">1.0.0</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Status:</span>
+              <span class="font-medium text-contabil-sucesso">✅ Funcionando</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Backend:</span>
+              <span class="font-medium text-contabil-info">Django MVP</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Frontend:</span>
+              <span class="font-medium text-contabil-info">Astro MVP</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Database:</span>
+              <span class="font-medium text-contabil-info">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Ações Rápidas -->
+        <div class="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 p-6">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="text-header-md font-semibold text-contabil-azul">Ações</h3>
+          </div>
+          <div class="space-y-3">
+            <button 
+              id="btn-refresh-profile"
+              class="w-full bg-azul-secundario hover:bg-azul-principal text-white px-4 py-2 rounded-button font-medium transition-all duration-200 text-sm"
+            >
+              🔄 Atualizar Perfil
+            </button>
+            <button 
+              id="btn-test-backend"
+              class="w-full bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-button font-medium transition-all duration-200 text-sm"
+            >
+              🧪 Testar Backend
+            </button>
+            <a 
+              href="/login"
+              class="block w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-button font-medium transition-all duration-200 text-sm text-center"
+            >
+              🔄 Novo Login
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- SEÇÃO DE ESTATÍSTICAS DO SISTEMA -->
+      <!-- ================================================================= -->
+      <div class="bg-white rounded-multibpo shadow-card p-6 mb-8">
+        <h3 class="text-header-md font-semibold text-contabil-azul mb-6 flex items-center">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H9a2 2 0 01-2-2z" />
+          </svg>
+          Estatísticas do Sistema
+        </h3>
+
+        <div id="system-stats" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <!-- Stats serão carregadas via JavaScript -->
+        </div>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- SEÇÃO DE PRÓXIMOS PASSOS -->
+      <!-- ================================================================= -->
+      <div class="bg-gradient-info rounded-multibpo p-6">
+        <h3 class="text-header-md font-semibold text-contabil-azul mb-4 flex items-center">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+          Próximos Passos do MVP
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white/80 rounded-lg p-4">
+            <h4 class="font-semibold text-contabil-azul mb-2">✅ Concluído</h4>
+            <ul class="text-sm space-y-1 text-contabil-texto">
+              <li>• Backend Django funcionando</li>
+              <li>• Autenticação JWT implementada</li>
+              <li>• Frontend Astro responsivo</li>
+              <li>• Integração frontend-backend</li>
+            </ul>
+          </div>
+          
+          <div class="bg-white/80 rounded-lg p-4">
+            <h4 class="font-semibold text-contabil-azul mb-2">🚀 Próximo (Fase 3)</h4>
+            <ul class="text-sm space-y-1 text-contabil-texto">
+              <li>• Catálogo de serviços BPO</li>
+              <li>• Sistema de integração WhatsApp</li>
+              <li>• Dashboard de métricas avançado</li>
+              <li>• Deploy em produção</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<!-- ===================================================================== -->
+<!-- SCRIPTS DO DASHBOARD -->
+<!-- ===================================================================== -->
+<script>
+  // Importar utilitários
+  import { apiClient } from '../utils/api_client.js';
+
+  // =====================================================================
+  // INICIALIZAÇÃO DO DASHBOARD
+  // =====================================================================
+  document.addEventListener('DOMContentLoaded', async function() {
+    // Verificar autenticação
+    const token = localStorage.getItem('multibpo_access_token');
+    if (!token) {
+      window.location.href = '/login';
+      return;
+    }
+
+    // Carregar dados do usuário
+    await loadUserProfile();
+    
+    // Carregar estatísticas do sistema
+    await loadSystemStats();
+    
+    // Configurar event listeners
+    setupEventListeners();
+  });
+
+  // =====================================================================
+  // CARREGAR PERFIL DO USUÁRIO
+  // =====================================================================
+  async function loadUserProfile() {
+    try {
+      // Tentar usar dados do localStorage primeiro
+      const cachedUser = localStorage.getItem('multibpo_user');
+      if (cachedUser) {
+        const user = JSON.parse(cachedUser);
+        updateUserInterface(user);
+      }
+
+      // Fazer chamada fresh para a API
+      const response = await apiClient.get('/profile/');
+      
+      if (response.success) {
+        const user = response.user;
+        
+        // Atualizar localStorage
+        localStorage.setItem('multibpo_user', JSON.stringify(user));
+        
+        // Atualizar interface
+        updateUserInterface(user);
+      }
+      
+    } catch (error) {
+      console.error('Erro ao carregar perfil:', error);
+      
+      if (error.response?.status === 401) {
+        // Token inválido, redirecionar para login
+        localStorage.clear();
+        window.location.href = '/login';
+      } else {
+        showNotification('Erro ao carregar perfil do usuário', 'error');
+      }
+    }
+  }
+
+  // =====================================================================
+  // ATUALIZAR INTERFACE COM DADOS DO USUÁRIO
+  // =====================================================================
+  function updateUserInterface(user) {
+    // Header
+    document.getElementById('user-name').textContent = user.nome_completo || 'Usuário MVP';
+    document.getElementById('user-email').textContent = user.email || '-';
+    document.getElementById('user-avatar').textContent = (user.nome_completo || 'U')[0].toUpperCase();
+    
+    // Welcome message
+    document.getElementById('welcome-message').textContent = 
+      `Olá, ${user.nome_completo || 'Usuário'}! Sua conta MVP está ativa e funcionando perfeitamente.`;
+    
+    // Perfil card
+    document.getElementById('profile-name').textContent = user.nome_completo || '-';
+    document.getElementById('profile-email').textContent = user.email || '-';
+    document.getElementById('profile-cpf').textContent = user.cpf || '-';
+    document.getElementById('profile-telefone').textContent = user.telefone || 'Não informado';
+    document.getElementById('profile-status').textContent = user.ativo ? '✅ Ativo' : '❌ Inativo';
+    
+    // Aplicar classes baseadas no status
+    const statusEl = document.getElementById('profile-status');
+    if (user.ativo) {
+      statusEl.className = 'font-medium text-contabil-sucesso';
+    } else {
+      statusEl.className = 'font-medium text-contabil-erro';
+    }
+  }
+
+  // =====================================================================
+  // CARREGAR ESTATÍSTICAS DO SISTEMA
+  // =====================================================================
+  async function loadSystemStats() {
+    try {
+      const response = await apiClient.get('/test/');
+      
+      if (response.sistema) {
+        const stats = [
+          { label: 'Total MVP Users', value: response.estatisticas?.total_mvp_users || 0, color: 'text-blue-600' },
+          { label: 'Usuários Ativos', value: response.estatisticas?.mvp_users_ativos || 0, color: 'text-green-600' },
+          { label: 'Endpoints', value: response.endpoints_implementados?.length || 0, color: 'text-purple-600' },
+          { label: 'Status', value: response.mvp_ready ? 'OK' : 'NOK', color: response.mvp_ready ? 'text-green-600' : 'text-red-600' }
+        ];
+        
+        renderSystemStats(stats);
+      }
+    } catch (error) {
+      console.error('Erro ao carregar estatísticas:', error);
+      renderSystemStats([
+        { label: 'Sistema', value: 'Erro', color: 'text-red-600' },
+        { label: 'Status', value: 'Offline', color: 'text-red-600' }
+      ]);
+    }
+  }
+
+  // =====================================================================
+  // RENDERIZAR ESTATÍSTICAS
+  // =====================================================================
+  function renderSystemStats(stats) {
+    const container = document.getElementById('system-stats');
+    container.innerHTML = stats.map(stat => `
+      <div class="text-center">
+        <div class="text-2xl font-bold ${stat.color}">${stat.value}</div>
+        <div class="text-xs text-gray-500">${stat.label}</div>
+      </div>
+    `).join('');
+  }
+
+  // =====================================================================
+  // CONFIGURAR EVENT LISTENERS
+  // =====================================================================
+  function setupEventListeners() {
+    // Logout button
+    document.getElementById('btn-logout')?.addEventListener('click', handleLogout);
+    
+    // Refresh profile button
+    document.getElementById('btn-refresh-profile')?.addEventListener('click', loadUserProfile);
+    
+    // Test backend button
+    document.getElementById('btn-test-backend')?.addEventListener('click', testBackend);
+  }
+
+  // =====================================================================
+  // HANDLE LOGOUT
+  // =====================================================================
+  async function handleLogout() {
+    const btn = document.getElementById('btn-logout');
+    const btnText = document.getElementById('logout-text');
+    const btnLoading = document.getElementById('logout-loading');
+    
+    try {
+      // Mostrar loading
+      btn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+      
+      // Tentar logout no backend
+      const refreshToken = localStorage.getItem('multibpo_refresh_token');
+      if (refreshToken) {
+        try {
+          await apiClient.post('/logout/', { refresh_token: refreshToken });
+        } catch (error) {
+          // Ignorar erros de logout, limpar localStorage mesmo assim
+          console.warn('Erro no logout backend:', error);
+        }
+      }
+      
+      // Limpar localStorage
+      localStorage.clear();
+      
+      // Mostrar mensagem e redirecionar
+      showNotification('Logout realizado com sucesso!', 'success');
+      
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 1000);
+      
+    } catch (error) {
+      console.error('Erro no logout:', error);
+      
+      // Mesmo com erro, limpar localStorage e redirecionar
+      localStorage.clear();
+      window.location.href = '/login';
+    }
+  }
+
+  // =====================================================================
+  // TESTAR BACKEND
+  // =====================================================================
+  async function testBackend() {
+    try {
+      const response = await apiClient.get('/protected-test/');
+      showNotification('Backend MVP funcionando perfeitamente! ✅', 'success');
+      console.log('Backend test result:', response);
+    } catch (error) {
+      showNotification('Erro ao testar backend MVP ❌', 'error');
+      console.error('Backend test error:', error);
+    }
+  }
+
+  // =====================================================================
+  // MOSTRAR NOTIFICAÇÃO
+  // =====================================================================
+  function showNotification(message, type = 'info') {
+    // Criar notificação toast
+    const toast = document.createElement('div');
+    toast.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transition-all duration-300 ${
+      type === 'success' ? 'bg-green-500 text-white' :
+      type === 'error' ? 'bg-red-500 text-white' :
+      'bg-blue-500 text-white'
+    }`;
+    toast.textContent = message;
+    
+    document.body.appendChild(toast);
+    
+    // Auto remover após 3 segundos
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(100%)';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+</script>
+
+<!-- ===================================================================== -->
+<!-- FUNCIONALIDADES DO DASHBOARD:
+
+1. ÁREA PROTEGIDA:
+   - Verificação automática de token JWT
+   - Redirecionamento para login se não autenticado
+   - Layout customizado sem header/footer padrão
+
+2. DADOS DO USUÁRIO:
+   - Carregamento via API /profile/
+   - Cache localStorage para performance
+   - Interface atualizada dinamicamente
+
+3. ESTATÍSTICAS SISTEMA:
+   - Dados via API /test/
+   - Métricas em tempo real
+   - Status do sistema MVP
+
+4. FUNCIONALIDADES:
+   - Logout seguro com backend
+   - Refresh de perfil manual
+   - Teste de conectividade backend
+   - Notificações toast
+
+5. UX OTIMIZADA:
+   - Loading states em ações
+   - Notificações visuais
+   - Grid responsivo
+   - Próximos passos informativos
+
+6. INTEGRAÇÃO COMPLETA:
+   - Todas as APIs MVP utilizadas
+   - Error handling robusto
+   - Mobile-first responsive
+===================================================================== -->

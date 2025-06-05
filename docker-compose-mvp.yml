@@ -1,0 +1,79 @@
+# ==========================================================================
+# MultiBPO MVP Frontend - Docker Compose Extension
+# Mini-Fase MVP 2 - Frontend básico
+# 
+# ADICIONA container frontend MVP aos containers existentes
+# NÃO altera infraestrutura atual (backend, db, nginx, frontend)
+# ==========================================================================
+
+version: "3.9"
+
+services:
+  # ==========================================================================
+  # NOVO CONTAINER: Frontend MVP Astro
+  # ==========================================================================
+  mvp-frontend:
+    build: ./multibpo_mvp_frontend
+    container_name: multibpo_mvp_frontend
+    ports:
+      - "0.0.0.0:8013:3000"
+    volumes:
+      - ./multibpo_mvp_frontend:/app
+      - /app/node_modules  # Volume anônimo para node_modules
+    environment:
+      - NODE_ENV=development
+      - ASTRO_HOST=0.0.0.0
+      - ASTRO_PORT=3000
+      - API_BASE_URL=http://192.168.1.4:8082/api/v1/mvp
+    networks:
+      - multibpo_network
+    depends_on:
+      - backend  # Depende do backend MVP existente
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# ==========================================================================
+# USAR REDE EXISTENTE (não criar nova)
+# ==========================================================================
+networks:
+  multibpo_network:
+    external: true
+
+# ==========================================================================
+# COMANDOS PARA USAR:
+# 
+# 1. Subir apenas o novo container MVP:
+#    docker-compose -f docker-compose-mvp.yml up -d
+# 
+# 2. Ver logs do frontend MVP:
+#    docker-compose -f docker-compose-mvp.yml logs -f mvp-frontend
+# 
+# 3. Parar apenas MVP frontend:
+#    docker-compose -f docker-compose-mvp.yml down
+# 
+# 4. Rebuild do container MVP:
+#    docker-compose -f docker-compose-mvp.yml up --build -d
+# ==========================================================================
+
+# ==========================================================================
+# ARQUITETURA FINAL:
+# 
+# Container                Port     Status
+# ────────────────────────────────────────
+# multibpo_backend        8010     ✅ Existente (APIs MVP)
+# multibpo_frontend       8011     ✅ Existente (Frontend atual)  
+# multibpo_db            8012     ✅ Existente (PostgreSQL)
+# multibpo_nginx         8082     ✅ Existente (Proxy)
+# multibpo_mvp_frontend  8013     🆕 NOVO (Frontend MVP Astro)
+# 
+# URLs Resultantes:
+# ────────────────────────────────────────
+# Backend APIs:    http://192.168.1.4:8082/api/v1/mvp/
+# Frontend MVP:    http://192.168.1.4:8013/
+# Admin MVP:       http://192.168.1.4:8082/admin/mvp/
+# ==========================================================================

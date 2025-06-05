@@ -1,0 +1,110 @@
+---
+// ==========================================================================
+// MultiBPO MVP - Página Inicial
+// Mini-Fase MVP 2 - Homepage
+// ==========================================================================
+
+// Importar layout principal
+import LayoutPrincipal from '../layouts/layout_principal.astro';
+---
+
+<LayoutPrincipal title="MultiBPO MVP - Plataforma BPO Contábil">
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700">
+    <div class="max-w-4xl mx-auto px-6 text-center text-white">
+      <!-- Logo/Título -->
+      <h1 class="text-6xl font-bold mb-6">
+        🏢 MultiBPO
+      </h1>
+      
+      <!-- Subtítulo -->
+      <p class="text-2xl mb-8 text-blue-100">
+        Plataforma BPO Inteligente para Escritórios de Contabilidade
+      </p>
+      
+      <!-- Descrição -->
+      <p class="text-lg mb-12 text-blue-200 max-w-2xl mx-auto">
+        Sistema MVP completo com autenticação JWT, dashboard contábil e integração com APIs especializadas para o mercado contábil brasileiro.
+      </p>
+      
+      <!-- Botões de Ação -->
+      <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+        <a 
+          href="/cadastro" 
+          class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+        >
+          🚀 Cadastrar Grátis
+        </a>
+        
+        <a 
+          href="/login" 
+          class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+        >
+          🔐 Fazer Login
+        </a>
+      </div>
+      
+      <!-- Status MVP -->
+      <div class="mt-12 p-6 bg-white/10 rounded-lg backdrop-blur-sm">
+        <p class="text-green-300 font-semibold mb-2">
+          ✅ Sistema MVP Funcionando
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+          <div>
+            <span class="text-blue-300">Backend:</span>
+            <br>
+            <span class="text-white font-mono">:8082/api/v1/mvp/</span>
+          </div>
+          <div>
+            <span class="text-blue-300">Frontend:</span>
+            <br>
+            <span class="text-white font-mono">:8013</span>
+          </div>
+          <div>
+            <span class="text-blue-300">Status:</span>
+            <br>
+            <span class="text-green-400">🟢 Online</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">
+        🎯 Funcionalidades MVP
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+          <div class="text-4xl mb-4">🔐</div>
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Autenticação JWT</h3>
+          <p class="text-gray-600">
+            Sistema completo de cadastro, login e gerenciamento de sessões com tokens JWT seguros.
+          </p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+          <div class="text-4xl mb-4">📊</div>
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Dashboard Contábil</h3>
+          <p class="text-gray-600">
+            Interface intuitiva para gestão de dados contábeis e visualização de informações importantes.
+          </p>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+          <div class="text-4xl mb-4">🇧🇷</div>
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Validações BR</h3>
+          <p class="text-gray-600">
+            Validação automática de CPF, CNPJ e dados específicos do mercado brasileiro.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</LayoutPrincipal>

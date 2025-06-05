@@ -34,6 +34,8 @@ urlpatterns = [
     
     # Receita Federal (consultas governamentais)
     path('api/v1/receita/', include('apps.receita.urls')),
+
+    path('api/v1/mvp/', include('apps.mvp.urls')),  # ← NOVO: URLs MVP
     
     # ========== JWT Token endpoints (SimpleJWT) ==========
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

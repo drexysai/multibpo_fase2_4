@@ -18,7 +18,6 @@ services:
     networks:
       - multibpo_network
     restart: unless-stopped
-    # ← REMOVIDO: health check do backend (pode ser instável)
 
   # Frontend Astro
   frontend:
@@ -34,7 +33,6 @@ services:
     networks:
       - multibpo_network
     restart: unless-stopped
-    # ← REMOVIDO: health check do frontend (era problemático)
 
   # PostgreSQL Database
   db:
@@ -77,6 +75,26 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
+  # ========== NOVO: Frontend MVP Astro ==========
+  mvp-frontend:
+    build: ./multibpo_mvp_frontend
+    container_name: multibpo_mvp_frontend
+    ports:
+      - "0.0.0.0:8013:3000"
+    volumes:
+      - ./multibpo_mvp_frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - ASTRO_HOST=0.0.0.0
+      - ASTRO_PORT=3000
+      - API_BASE_URL=http://192.168.1.4:8082/api/v1/mvp
+    depends_on:
+      - backend
+    networks:
+      - multibpo_network
+    restart: unless-stopped
 
 volumes:
   multibpo_db_volume:

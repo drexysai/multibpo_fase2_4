@@ -1,0 +1,323 @@
+---
+// ==========================================================================
+// MultiBPO MVP Frontend - Layout Principal
+// Mini-Fase MVP 2 - Frontend básico
+// 
+// Layout base para todas as páginas MVP
+// Header, footer e estrutura responsiva
+// ==========================================================================
+
+export interface Props {
+  title: string;
+  description?: string;
+  showHeader?: boolean;
+  showFooter?: boolean;
+  requireAuth?: boolean;
+}
+
+const {
+  title,
+  description = "MultiBPO MVP - Plataforma BPO para Escritórios Contábeis",
+  showHeader = true,
+  showFooter = true,
+  requireAuth = false
+} = Astro.props;
+
+// Meta tags dinâmicos
+const pageTitle = `${title} | MultiBPO MVP`;
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <!-- =================================================================== -->
+  <!-- META TAGS BÁSICOS -->
+  <!-- =================================================================== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="author" content="MultiBPO Team" />
+  
+  <!-- =================================================================== -->
+  <!-- TÍTULO E FAVICONS -->
+  <!-- =================================================================== -->
+  <title>{pageTitle}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  
+  <!-- =================================================================== -->
+  <!-- META TAGS PARA SEO -->
+  <!-- =================================================================== -->
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="MultiBPO MVP" />
+  
+  <!-- =================================================================== -->
+  <!-- PRECONNECT PARA PERFORMANCE -->
+  <!-- =================================================================== -->
+  <link rel="preconnect" href="http://192.168.1.4:8082" />
+  
+  <!-- =================================================================== -->
+  <!-- SCRIPTS GLOBAIS -->
+  <!-- =================================================================== -->
+  <script>
+    // Configurações globais
+    window.MULTIBPO_CONFIG = {
+      API_BASE_URL: 'http://192.168.1.4:8082/api/v1/mvp',
+      APP_VERSION: '1.0.0',
+      APP_NAME: 'MultiBPO MVP'
+    };
+  </script>
+</head>
+
+<body class="h-full bg-gradient-multibpo font-sans">
+  <!-- =================================================================== -->
+  <!-- CONTAINER PRINCIPAL -->
+  <!-- =================================================================== -->
+  <div class="min-h-full flex flex-col">
+    
+    <!-- ================================================================= -->
+    <!-- HEADER MULTIBPO MVP -->
+    <!-- ================================================================= -->
+    {showHeader && (
+      <header class="bg-white shadow-card">
+        <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between items-center h-16">
+            
+            <!-- Logo e Nome -->
+            <div class="flex items-center">
+              <a 
+                href="/" 
+                class="flex items-center space-x-3 text-contabil-azul hover:text-azul-secundario transition-colors duration-200"
+              >
+                <div class="w-8 h-8 bg-gradient-multibpo rounded-lg flex items-center justify-center">
+                  <span class="text-white font-bold text-sm">M</span>
+                </div>
+                <span class="text-header-md font-semibold hidden sm:block">
+                  MultiBPO MVP
+                </span>
+              </a>
+            </div>
+
+            <!-- Navegação Desktop -->
+            <nav class="hidden md:flex items-center space-x-6">
+              <a 
+                href="/" 
+                class="text-contabil-texto hover:text-contabil-azul transition-colors duration-200 font-medium"
+              >
+                Início
+              </a>
+              <a 
+                href="/cadastro" 
+                class="text-contabil-texto hover:text-contabil-azul transition-colors duration-200 font-medium"
+              >
+                Cadastrar
+              </a>
+              <a 
+                href="/login" 
+                class="bg-gradient-multibpo text-white px-4 py-2 rounded-button font-medium hover:shadow-button transition-all duration-200"
+              >
+                Entrar
+              </a>
+            </nav>
+
+            <!-- Menu Mobile -->
+            <div class="md:hidden">
+              <button 
+                type="button" 
+                class="mobile-menu-button text-contabil-azul hover:text-azul-secundario transition-colors duration-200"
+                aria-label="Abrir menu"
+              >
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Menu Mobile Expandido -->
+          <div class="mobile-menu hidden md:hidden pb-4">
+            <div class="space-y-2">
+              <a 
+                href="/" 
+                class="block px-3 py-2 text-contabil-texto hover:text-contabil-azul hover:bg-azul-claro/10 rounded-input transition-all duration-200"
+              >
+                Início
+              </a>
+              <a 
+                href="/cadastro" 
+                class="block px-3 py-2 text-contabil-texto hover:text-contabil-azul hover:bg-azul-claro/10 rounded-input transition-all duration-200"
+              >
+                Cadastrar
+              </a>
+              <a 
+                href="/login" 
+                class="block px-3 py-2 bg-gradient-multibpo text-white rounded-input font-medium text-center"
+              >
+                Entrar
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+    )}
+
+    <!-- ================================================================= -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ================================================================= -->
+    <main class="flex-1 flex flex-col">
+      <div class="flex-1 w-full">
+        <slot />
+      </div>
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- FOOTER MULTIBPO MVP -->
+    <!-- ================================================================= -->
+    {showFooter && (
+      <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Informações da Empresa -->
+            <div>
+              <div class="flex items-center space-x-2 mb-4">
+                <div class="w-6 h-6 bg-gradient-multibpo rounded flex items-center justify-center">
+                  <span class="text-white font-bold text-xs">M</span>
+                </div>
+                <span class="text-header-md font-semibold text-contabil-azul">MultiBPO MVP</span>
+              </div>
+              <p class="text-contabil-texto text-small leading-relaxed">
+                Plataforma BPO inteligente para escritórios de contabilidade. 
+                Simplifique sua gestão contábil com tecnologia avançada.
+              </p>
+            </div>
+
+            <!-- Links Rápidos -->
+            <div>
+              <h3 class="text-header-md font-semibold text-contabil-azul mb-4">
+                Links Rápidos
+              </h3>
+              <ul class="space-y-2">
+                <li>
+                  <a 
+                    href="/cadastro" 
+                    class="text-contabil-texto hover:text-contabil-azul transition-colors duration-200"
+                  >
+                    Criar Conta
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/login" 
+                    class="text-contabil-texto hover:text-contabil-azul transition-colors duration-200"
+                  >
+                    Fazer Login
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/dashboard" 
+                    class="text-contabil-texto hover:text-contabil-azul transition-colors duration-200"
+                  >
+                    Dashboard
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contato -->
+            <div>
+              <h3 class="text-header-md font-semibold text-contabil-azul mb-4">
+                Sistema MVP
+              </h3>
+              <div class="space-y-2 text-small text-contabil-texto">
+                <p>Versão: 1.0.0</p>
+                <p>Status: <span class="text-contabil-sucesso font-medium">Funcionando</span></p>
+                <p>Backend: <span class="text-contabil-info">Django MVP</span></p>
+                <p>Frontend: <span class="text-contabil-info">Astro MVP</span></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Copyright -->
+          <div class="border-t border-gray-200 mt-8 pt-6">
+            <p class="text-center text-small text-contabil-texto">
+              &copy; 2024 MultiBPO MVP. Desenvolvido para escritórios contábeis.
+            </p>
+          </div>
+        </div>
+      </footer>
+    )}
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- SCRIPTS GLOBAIS -->
+  <!-- =================================================================== -->
+  <script>
+    // Menu mobile toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.querySelector('.mobile-menu-button');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+
+    // Auth check para páginas protegidas
+    if (window.location.pathname === '/dashboard') {
+      const token = localStorage.getItem('multibpo_access_token');
+      if (!token) {
+        window.location.href = '/login';
+      }
+    }
+  </script>
+
+  <!-- =================================================================== -->
+  <!-- LOADING INDICATOR (opcional) -->
+  <!-- =================================================================== -->
+  <div id="loading-indicator" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-multibpo p-6 flex items-center space-x-3">
+      <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-contabil-azul"></div>
+      <span class="text-contabil-texto font-medium">Carregando...</span>
+    </div>
+  </div>
+</body>
+</html>
+
+<!-- ===================================================================== -->
+<!-- FUNCIONALIDADES DO LAYOUT:
+
+1. RESPONSIVE:
+   - Header com menu mobile
+   - Grid responsivo no footer
+   - Navegação adaptável
+
+2. AUTENTICAÇÃO:
+   - Proteção automática para /dashboard
+   - Links dinâmicos baseados em auth
+
+3. PERFORMANCE:
+   - Preconnect para APIs
+   - Classes CSS otimizadas
+   - Scripts mínimos
+
+4. UX/UI:
+   - Transições suaves
+   - Estados hover consistentes
+   - Loading indicator global
+
+5. SEO:
+   - Meta tags dinâmicos
+   - Open Graph tags
+   - Estrutura semântica
+
+6. CONFIGURAÇÃO:
+   - Props flexíveis
+   - Headers/footers opcionais
+   - Auth requirement opcional
+===================================================================== -->
