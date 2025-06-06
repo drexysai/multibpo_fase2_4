@@ -1,0 +1,44 @@
+{
+  "timestamp": "2025-06-06T10:11:47.583360",
+  "mvp_version": "3.0",
+  "test_type": "all",
+  "duration_seconds": 16.325387239456177,
+  "total_tests": 21,
+  "passed_tests": 6,
+  "failed_tests": 15,
+  "success_rate": 28.57142857142857,
+  "results": {
+    "django_config": true,
+    "database_connection": true,
+    "installed_apps": true,
+    "url_configuration": true,
+    "register_view": false,
+    "login_view": false,
+    "profile_view": false,
+    "test_view": false,
+    "protected_view": false,
+    "mvp_user_creation": false,
+    "mvp_user_validation": true,
+    "mvp_user_methods": true,
+    "mvp_user_relationships": false,
+    "cpf_validation": false,
+    "email_validation": false,
+    "password_validation": false,
+    "serializer_validation": false,
+    "jwt_generation": false,
+    "token_validation": false,
+    "token_refresh": false,
+    "endpoint_protection": false
+  },
+  "django_settings": {
+    "debug": true,
+    "allowed_hosts": [
+      "localhost",
+      "127.0.0.1",
+      "backend",
+      "192.168.1.4"
+    ],
+    "database_engine": "django.db.backends.postgresql",
+    "installed_apps_count": 18
+  }
+}
